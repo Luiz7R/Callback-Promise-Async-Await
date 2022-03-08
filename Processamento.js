@@ -1,36 +1,20 @@
-var request = require('request');
+import fetch from 'node-fetch';
 
-const getPosts = url => new Promise((resolve, reject) => {
+const init = async() => {
 
-     request(url, (err, res, contents) => {
-          
-            if ( !err && res.statusCode == 200 )
-            {
-                 resolve(contents) 
-            }
-            else
-            {
-                 reject(error)
-            }
-     })
- })
-
-
- const init = async() => {
+     const url = "https://jsonplaceholder.typicode.com/posts"
 
      try
-     {    
-          const url = "https://jsonplaceholder.typicode.com/posts"
-
-          const contents = await getPosts(url)
-
-          return contents;
-     }
-     catch(err)
      {
-         console.log(err)
+          const contents = await fetch(url)
+
+          return contents.json();
      }
- }
+     catch(error)
+     {
+          console.log(error)
+     }
+}
 
  init().then(contents => console.log(contents))
 
